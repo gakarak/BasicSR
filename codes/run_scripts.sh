@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # single GPU training
 python train.py -opt options/train/train_SRResNet.yml
 
