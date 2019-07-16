@@ -19,7 +19,7 @@ datasets:
     dataroot_LQ: /home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_trn/LRx4.lmdb
 
     use_shuffle: true
-    n_workers: 1  # per GPU
+    n_workers: 18  # per GPU
     batch_size: 16
     GT_size: 128
     use_flip: true
