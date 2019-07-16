@@ -12,9 +12,25 @@ except ImportError:
     pass
 
 # configurations
-img_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub/*'  # glob matching pattern
-lmdb_save_path = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb'
-meta_info = {'name': 'DIV2K800_sub_GT'}
+# img_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub/*'  # glob matching pattern
+# lmdb_save_path = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb'
+# meta_info = {'name': 'DIV2K800_sub_GT'}
+
+# img_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub/*'  # glob matching pattern
+# lmdb_save_path = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb'
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_sub'
+
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_sub/LRx4'
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_sub/HRx4'
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_sub/LRx4'
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_train_HR_sub/Bicx4'
+
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_valid_HR_val/Bicx4'
+# img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_valid_HR_val/HRx4'
+img_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_valid_HR_val/LRx4'
+lmdb_save_path = img_folder + '.lmdb'
+meta_info = {'name': 'DIV2K_sub_GT'}
+
 mode = 2  # 1 for reading all the images to memory and then writing to lmdb (more memory);
 # 2 for reading several images and then writing to lmdb, loop over (less memory)
 batch = 1000  # Used in mode 2. After batch images, lmdb commits.
@@ -25,7 +41,7 @@ if not lmdb_save_path.endswith('.lmdb'):
 if osp.exists(lmdb_save_path):
     print('Folder [{:s}] already exists. Exit...'.format(lmdb_save_path))
     sys.exit(1)
-img_list = sorted(glob.glob(img_folder))
+img_list = sorted(glob.glob(os.path.join(img_folder, '*') ))
 if mode == 1:
     print('Read images...')
     dataset = [cv2.imread(v, cv2.IMREAD_UNCHANGED) for v in img_list]
