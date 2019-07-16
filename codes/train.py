@@ -26,18 +26,10 @@ def init_dist(backend='nccl', **kwargs):
     dist.init_process_group(backend=backend, **kwargs)
 
 
-def main():
-    #### options
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-opt', type=str, help='Path to option YMAL file.')
-    parser.add_argument('--launcher', choices=['none', 'pytorch'], default='none',
-                        help='job launcher')
-    parser.add_argument('--local_rank', type=int, default=0)
-    args = parser.parse_args()
-    opt = option.parse(args.opt, is_train=True)
-
+def main(path_opt: str, launcher: str = None, local_rank: int = 0):
+    opt = option.parse(path_opt, is_train=True)
     #### distributed training settings
-    if args.launcher == 'none':  # disabled distributed training
+    if launcher == 'none':  # disabled distributed training
         opt['dist'] = False
         rank = -1
         print('Disabled distributed training.')
@@ -46,7 +38,6 @@ def main():
         init_dist()
         world_size = torch.distributed.get_world_size()
         rank = torch.distributed.get_rank()
-
     #### loading resume state if exists
     if opt['path'].get('resume_state', None):
         # distributed resuming: all load into default GPU
@@ -56,7 +47,7 @@ def main():
         option.check_resume(opt, resume_state['iter'])  # check resume options
     else:
         resume_state = None
-
+    #
     #### mkdir and loggers
     if rank <= 0:  # normal training (rank -1) OR distributed training (rank 0)
         if resume_state is None:
@@ -229,4 +220,16 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #### options
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-opt', type=str, required=True, help='Path to option YMAL file.')
+    parser.add_argument('--launcher', choices=['none', 'pytorch'], default='none',
+                        help='job launcher')
+    parser.add_argument('--local_rank', type=int, default=0)
+    args = parser.parse_args()
+    #
+    main(
+        path_opt=args.opt,
+        launcher=args.launcher,
+        local_rank=args.local_rank
+    )

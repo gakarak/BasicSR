@@ -3,6 +3,8 @@ import os.path as osp
 import sys
 from multiprocessing import Pool
 import numpy as np
+import argparse
+import logging
 import cv2
 try:
     sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
@@ -11,10 +13,13 @@ except ImportError:
     pass
 
 
-def main():
+def main_run():
     """A multi-thread tool to crop sub imags."""
-    input_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800'
-    save_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub'
+    # input_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800'
+    # save_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub'
+    input_folder = '/home/ar/data/debug/super_resolution/DIV2K/DIV2K_train_HR'
+    save_folder = input_folder + '_sub'
+    # save_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub'
     n_thread = 20
     crop_sz = 480
     step = 240
@@ -88,4 +93,4 @@ def worker(path, save_folder, crop_sz, step, thres_sz, compression_level):
 
 
 if __name__ == '__main__':
-    main()
+    main_run()
