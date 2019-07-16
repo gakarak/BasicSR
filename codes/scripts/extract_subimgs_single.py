@@ -17,7 +17,8 @@ def main_run():
     """A multi-thread tool to crop sub imags."""
     # input_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800'
     # save_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub'
-    input_folder = '/home/ar/data/debug/super_resolution/DIV2K/DIV2K_train_HR'
+    # input_folder = '/home/ar/data/debug/super_resolution/DIV2K/DIV2K_train_HR'
+    input_folder = '/home/ar/data/debug/high_resolution_data/super_resolution_ESRGAN/DIV2K/DIV2K_valid_HR'
     save_folder = input_folder + '_sub'
     # save_folder = '/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub'
     n_thread = 20
